@@ -75,3 +75,7 @@ portable:
 publish:
   provider: github
   releaseType: draft
+# Shown at the top of every GitHub release: which file to download and how to
+# get past the one-time Gatekeeper and SmartScreen prompts of unsigned builds.
+releaseInfo:
+  releaseNotesFile: build/release-notes.md
