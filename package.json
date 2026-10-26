@@ -1,7 +1,7 @@
 {
   "name": "ash-studio-recorder",
   "productName": "Ash Studio Recorder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Open-source, cross-platform screen recorder and editor with automatic zoom and camera motion.",
   "author": "Ash Studio Recorder contributors",
