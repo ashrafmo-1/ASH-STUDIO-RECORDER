@@ -3,6 +3,13 @@ name: Release
 on:
   push:
     tags: ['v*']
+  # Rebuild an existing tag with the current workflow, for example after fixing
+  # a packaging step. Installers go to the same draft release.
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Tag to build, for example v0.1.0
+        required: true
 
 # Jobs get only the permissions they need; publishing is limited to the packaging job.
 permissions:
@@ -14,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -49,6 +58,8 @@ jobs:
             builder: --win --x64
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -62,6 +73,9 @@ jobs:
       - name: Fetch FFmpeg for the target architecture
         shell: bash
         run: |
+          # The installer skips the download when any binary is present, so remove
+          # the one npm ci fetched for the runner's own architecture first.
+          rm -f node_modules/ffmpeg-static/ffmpeg node_modules/ffmpeg-static/ffmpeg.exe
           npm_config_arch=${{ matrix.arch }} node node_modules/ffmpeg-static/install.js
           if [ "${{ runner.os }}" = "Windows" ]; then
             test -s node_modules/ffmpeg-static/ffmpeg.exe
