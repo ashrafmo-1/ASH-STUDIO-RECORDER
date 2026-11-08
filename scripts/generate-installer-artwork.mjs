@@ -63,7 +63,7 @@ function sidebar(x, y, width, height) {
   const t = y / height
   let color = mix(light, soft, t * 0.46)
   const wave = 32 * Math.sin((x / width) * Math.PI * 1.5 + t * 2)
-  if (y > height * 0.67 + wave) color = mix(color, [198, 235, 216], Math.min(0.7, (y / height - 0.6)))
+  if (y > height * 0.67 + wave) color = mix(color, [198, 235, 216], Math.min(0.7, y / height - 0.6))
   const mark = limeMark(x, y, 116)
   if (mark) color = mark
   if (y >= 211 && y <= 215 && x >= 24 && x < 76) color = accent
@@ -79,7 +79,11 @@ function header(x, y, width, height) {
   const badgeY = 11
   if (insideRounded(x, y, badgeX, badgeY, 36, 36, 9)) {
     if (x > badgeX + 9 && x < badgeX + 27 && y > badgeY + 8 && y < badgeY + 28) {
-      if (x > badgeX + 14 && x < badgeX + 23 && Math.abs(y - (badgeY + 18)) < (x - badgeX - 13) * 0.85) {
+      if (
+        x > badgeX + 14 &&
+        x < badgeX + 23 &&
+        Math.abs(y - (badgeY + 18)) < (x - badgeX - 13) * 0.85
+      ) {
         return [240, 255, 247]
       }
       return [19, 68, 48]

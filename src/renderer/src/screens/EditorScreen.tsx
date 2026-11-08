@@ -227,7 +227,10 @@ export function EditorScreen({ projectKey }: { projectKey: string }): React.JSX.
       </header>
 
       <main className="grid min-w-0 flex-1 grid-cols-1 lg:h-[calc(100dvh-3.5rem)] lg:min-h-[620px] lg:grid-cols-[minmax(0,1fr)_320px]">
-        <section aria-label="Video editor workspace" className="flex min-h-[640px] min-w-0 flex-col lg:min-h-0">
+        <section
+          aria-label="Video editor workspace"
+          className="flex min-h-[640px] min-w-0 flex-col lg:min-h-0"
+        >
           <div className="flex min-h-[350px] min-w-0 flex-1 flex-col bg-canvas">
             <div className="px-5 pt-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/50">
               Live output preview
@@ -249,7 +252,10 @@ export function EditorScreen({ projectKey }: { projectKey: string }): React.JSX.
             </p>
           ) : null}
 
-          <section aria-label="Timeline workspace" className="min-w-0 shrink-0 border-t border-white/10 bg-panel px-3 py-3 md:px-5">
+          <section
+            aria-label="Timeline workspace"
+            className="min-w-0 shrink-0 border-t border-white/10 bg-panel px-3 py-3 md:px-5"
+          >
             <div className="mb-2 flex items-center gap-3">
               <h2 className="text-xs font-semibold text-zinc-100">Timeline</h2>
               <span className="text-[11px] text-zinc-500">Clips · Speed · Zoom · Audio</span>

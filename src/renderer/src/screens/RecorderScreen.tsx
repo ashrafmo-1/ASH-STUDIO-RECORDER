@@ -546,7 +546,9 @@ export function RecorderScreen({ onOpenSetup }: RecorderScreenProps): React.JSX.
               >
                 <div className="mb-4 flex items-center justify-between gap-2">
                   <h2 className="text-xs font-semibold text-zinc-100">Capture sources</h2>
-                  <span className="text-[10px] text-zinc-500">{screenCount + windowCount} available</span>
+                  <span className="text-[10px] text-zinc-500">
+                    {screenCount + windowCount} available
+                  </span>
                 </div>
                 <div className="mb-4 grid grid-cols-2 gap-1 rounded-lg border border-white/10 bg-black/20 p-1">
                   <button
@@ -603,7 +605,6 @@ export function RecorderScreen({ onOpenSetup }: RecorderScreenProps): React.JSX.
                     ))}
                   </div>
                 )}
-
               </section>
 
               <section
@@ -644,7 +645,9 @@ export function RecorderScreen({ onOpenSetup }: RecorderScreenProps): React.JSX.
                 </div>
                 <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-zinc-400">
                   <span className="min-w-0 truncate">
-                    {target ? `${target.kind === 'screen' ? 'Display' : 'Window'} · ${target.name}` : 'No source selected'}
+                    {target
+                      ? `${target.kind === 'screen' ? 'Display' : 'Window'} · ${target.name}`
+                      : 'No source selected'}
                   </span>
                   <span className="shrink-0 text-zinc-500">Saved locally · No uploads</span>
                 </div>
@@ -758,7 +761,6 @@ export function RecorderScreen({ onOpenSetup }: RecorderScreenProps): React.JSX.
 
                   <p className="mt-3 text-center text-[10px] text-zinc-600">{SHORTCUT_HINT}</p>
                 </div>
-
               </aside>
             </div>
           </>

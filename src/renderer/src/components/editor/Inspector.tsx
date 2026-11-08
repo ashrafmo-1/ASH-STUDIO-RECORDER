@@ -4,11 +4,7 @@ import { useEditor } from '@renderer/stores/editor'
 import { SpeedPanel } from './SpeedPanel'
 import { BackgroundPanel } from './BackgroundPanel'
 
-import {
-  PRIMARY_INSPECTOR_TABS,
-  MORE_INSPECTOR_TABS,
-  type InspectorTab
-} from './inspector-tabs'
+import { PRIMARY_INSPECTOR_TABS, MORE_INSPECTOR_TABS, type InspectorTab } from './inspector-tabs'
 
 function Section({ title, children }: { title: string; children: ReactNode }): React.JSX.Element {
   return (

@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  INSPECTOR_TABS,
-  MORE_INSPECTOR_TABS,
-  PRIMARY_INSPECTOR_TABS
-} from './inspector-tabs'
+import { INSPECTOR_TABS, MORE_INSPECTOR_TABS, PRIMARY_INSPECTOR_TABS } from './inspector-tabs'
 
 describe('inspector navigation layout', () => {
   it('keeps the four most-used tools visible', () => {
@@ -16,11 +12,7 @@ describe('inspector navigation layout', () => {
   })
 
   it('keeps background, face cam, and audio accessible under More', () => {
-    expect(MORE_INSPECTOR_TABS.map((tab) => tab.id)).toEqual([
-      'background',
-      'facecam',
-      'audio'
-    ])
+    expect(MORE_INSPECTOR_TABS.map((tab) => tab.id)).toEqual(['background', 'facecam', 'audio'])
   })
 
   it('does not lose or duplicate an editing tool', () => {
