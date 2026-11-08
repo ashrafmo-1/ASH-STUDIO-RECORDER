@@ -1,3 +1,4 @@
+import { execFile } from 'node:child_process'
 import { desktopCapturer, shell, systemPreferences } from 'electron'
 import type { PermissionKind, PermissionState, PlatformCapabilities } from '@shared/platform'
 import { BasePlatformService } from './base'
@@ -8,6 +9,23 @@ const SETTINGS_URLS: Record<PermissionKind, string> = {
   camera: 'x-apple.systempreferences:com.apple.preference.security?Privacy_Camera',
   microphone: 'x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone'
 }
+
+/** Bundle identifier from electron-builder.yml; TCC keys permissions by it. */
+const APP_BUNDLE_ID = 'com.ashstudio.recorder'
+
+/**
+ * macOS ties privacy grants to the app's code signature. This build is ad-hoc
+ * signed, so every new build can leave a stale System Settings entry that shows
+ * as enabled while the running app is still "not granted". Clearing the entry
+ * lets the next request register the running copy again.
+ */
+const resetTccEntry = (service: 'ScreenCapture' | 'Accessibility'): Promise<void> =>
+  new Promise((resolve) => {
+    execFile('/usr/bin/tccutil', ['reset', service, APP_BUNDLE_ID], (error) => {
+      if (error) console.warn(`[platform] tccutil reset ${service} failed`, error)
+      resolve()
+    })
+  })
 
 export class DarwinPlatformService extends BasePlatformService {
   readonly capabilities: PlatformCapabilities = {
@@ -36,6 +54,9 @@ export class DarwinPlatformService extends BasePlatformService {
   async requestPermission(kind: PermissionKind): Promise<PermissionState[]> {
     switch (kind) {
       case 'screen': {
+        if (systemPreferences.getMediaAccessStatus('screen') !== 'granted') {
+          await resetTccEntry('ScreenCapture')
+        }
         if (systemPreferences.getMediaAccessStatus('screen') === 'not-determined') {
           await desktopCapturer.getSources({
             types: ['screen'],
@@ -48,6 +69,9 @@ export class DarwinPlatformService extends BasePlatformService {
         break
       }
       case 'accessibility': {
+        if (!systemPreferences.isTrustedAccessibilityClient(false)) {
+          await resetTccEntry('Accessibility')
+        }
         systemPreferences.isTrustedAccessibilityClient(true)
         await this.openPermissionSettings('accessibility')
         break
