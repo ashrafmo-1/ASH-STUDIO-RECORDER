@@ -10,6 +10,7 @@ import { IPC_EVENTS } from '@shared/ipc'
 import { registerIpcHandlers } from '@main/ipc'
 import { recorderManager } from '@main/recorder/manager'
 import { unregisterAllShortcuts } from '@main/shortcuts'
+import { installUpdater } from '@main/updater'
 import {
   createMainWindow,
   getMainWindow,
@@ -72,6 +73,7 @@ if (!gotSingleInstanceLock) {
     })
     prepareRecorderToolbar()
     installTray()
+    installUpdater()
     void recorderManager.recoverInterruptedSessions()
 
     recorderManager.setStartShortcut(() => {
